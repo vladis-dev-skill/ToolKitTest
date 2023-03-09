@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: toolkit_nginx
+    build:
+      context: development/nginx
+      dockerfile: Dockerfile
+    volumes:
+      - ../:/var/www/toolkit
+    ports:
+      - "8081:80"
+    depends_on:
+      - php-fpm
+  php-fpm:
+    container_name: toolkit_php-fpm
+    build:
+      context: development/php-fpm
+      dockerfile: Dockerfile
+    volumes:
+      - ../:/var/www/toolkit
+    depends_on:
+      - database
+  database:
+    container_name: toolkit_database
+    image: postgres:15.1-alpine
+    volumes:
+      - database:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: toolkit
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: toolkit
+    ports:
+      - "54328:5432"
+  redis:
+    container_name: toolkit_redis
+    image: redis:6.0-alpine
+    volumes:
+      - redis:/data
+    command: redis-server --requirepass secret
+
+volumes:
+  database:
+  redis:
