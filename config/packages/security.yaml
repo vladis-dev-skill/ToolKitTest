@@ -1,29 +1,41 @@
 security:
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    enable_authenticator_manager: true
     password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+        App\Common\Entity\User:
+            algorithm: bcrypt
+            cost: 12
+    #      App\Admin\Entity\Admin:
+    #        algorithm: bcrypt
     providers:
-        users_in_memory: { memory: null }
+        db_user_provider:
+            entity:
+                class: App\Common\Entity\User
+                property: email
     firewalls:
+        api:
+            pattern: ^/api
+            stateless: true
+            provider: db_user_provider
+            json_login:
+                check_path: jwt_auth
+                password_path: password
+                username_path: email
+                success_handler: app.auth_success_handler
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+            jwt: ~
+        main:
+            pattern: ^/
+            stateless: true
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        main:
-            lazy: true
-            provider: users_in_memory
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
-
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        #- { path: ^/admin, role: ROLE_SUPER_ADMIN }
+
+        - { path: ^/api/register, roles: PUBLIC_ACCESS }
+        - { path: ^/api/login, roles: PUBLIC_ACCESS }
+        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
     security:

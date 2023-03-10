@@ -1,6 +1,6 @@
 down: docker-down
 up: docker-up
-init: docker-down-clear docker-pull docker-build docker-up
+init: docker-down-clear docker-pull docker-build docker-up run
 exec_bash: docker-exec-bash
 test: toolkit-test
 
@@ -26,3 +26,19 @@ docker-exec-bash:
 	docker exec -it toolkit_php-fpm bash
 
 #Run app
+
+run: composer-install toolkit-generate-jwt toolkit-migrate
+
+#toolkit-dump toolkit-fixture
+
+composer-install:
+	docker exec -it toolkit_php-fpm composer install
+
+toolkit-generate-jwt:
+	docker exec -it toolkit_php-fpm php bin/console lexik:jwt:generate-keypair --skip-if-exists
+
+toolkit-migrate:
+	docker exec -it toolkit_php-fpm php bin/console doctrine:migrations:migrate --no-interaction
+
+toolkit-fixture:
+	docker exec -it toolkit_php-fpm php bin/console doctrine:fixtures:load --no-interaction
