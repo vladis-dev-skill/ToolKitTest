@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity, ORM\Table(name: "`user`"), UniqueEntity(fields: ["email"])]
 #[ORM\InheritanceType("SINGLE_TABLE"), ORM\DiscriminatorColumn(name: "user_type", type: "string")]
@@ -16,6 +17,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Column(type: "string", unique: true)]
+    #[Groups('user_read')]
     private string $email;
 
     #[ORM\Column(type: "string", nullable: true)]
@@ -27,6 +29,7 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
      * @var  string[]
      */
     #[ORM\Column(type: "json")]
+    #[Groups('user_read')]
     private array $roles = [];
 
     public function __toString(): string

@@ -9,6 +9,7 @@ use Carbon\CarbonImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use ReflectionClass;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 
 #[ORM\MappedSuperclass]
@@ -21,9 +22,11 @@ abstract class AbstractEntity implements TimestampableInterface
     protected ?string $id = null;
 
     #[ORM\Column(type: "datetime_immutable", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[Groups('user_read')]
     protected ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: "datetime_immutable", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
+    #[Groups('user_read')]
     protected ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()

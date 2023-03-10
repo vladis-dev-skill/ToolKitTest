@@ -14,8 +14,7 @@ class DashboardController extends AbstractController
     public function index(): Response
     {
         return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Common/Controller/DashboardController.php',
+            'message' => 'Welcome to Dashboard!',
         ]);
     }
 }

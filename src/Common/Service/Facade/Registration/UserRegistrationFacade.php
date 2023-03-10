@@ -16,21 +16,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 final class UserRegistrationFacade implements UserRegistrationFacadeInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    private UserPasswordHasherInterface $passwordHasher;
-
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param UserPasswordHasherInterface $passwordHasher
-     */
     public function __construct(
-        EntityManagerInterface      $entityManager,
-        UserPasswordHasherInterface $passwordHasher,
+        private readonly EntityManagerInterface      $entityManager,
+        private readonly UserPasswordHasherInterface $passwordHasher,
     )
     {
-        $this->entityManager = $entityManager;
-        $this->passwordHasher = $passwordHasher;
     }
 
 

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Common\Controller\Registration;
 
 use App\Common\DTO\UserRegistrationDTO;
-use App\Common\From\UserRegisterForm;
 use App\Common\Service\Facade\Registration\UserRegistrationFacadeInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,7 +13,6 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
-use function PHPUnit\Framework\exactly;
 
 #[Route(path: "/api", name: "api")]
 class RegistrationController extends AbstractController
@@ -39,8 +37,8 @@ class RegistrationController extends AbstractController
         }
 
         try {
-            $this->registrationFacade->registerUser($userDTO);
-            return $this->json(['message' => 'Registered Successfully']);
+            $user = $this->registrationFacade->registerUser($userDTO);
+            return new Response($serializer->serialize($user, 'json', ['groups' => 'user_read']));
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), ['exception' => $e]);
         }
