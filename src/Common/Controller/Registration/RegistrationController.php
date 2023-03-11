@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route(path: "/api", name: "api")]
-class RegistrationController extends AbstractController
+final class RegistrationController extends AbstractController
 {
     public function __construct(
         private readonly LoggerInterface                 $logger,

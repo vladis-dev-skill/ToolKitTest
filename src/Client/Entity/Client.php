@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace App\Client\Entity;
 
+use App\Claim\Entity\Claim;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Common\Entity\User;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -19,6 +22,17 @@ class Client extends User
     #[Groups('user_read')]
     private ?string $address = null;
 
+    #[ORM\OneToMany(mappedBy: "client", targetEntity: Claim::class, cascade: ["persist", "remove"])]
+    #[Groups('user_read')]
+    private array|Collection $claims;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->claims = new ArrayCollection();
+    }
+
     /**
      * @return string|null
      */
@@ -33,5 +47,31 @@ class Client extends User
     public function getAddress(): ?string
     {
         return $this->address;
+    }
+
+    public function getClaims(): Collection|array
+    {
+        return $this->claims;
+    }
+
+    public function setClaims(Collection|array $claims): void
+    {
+        $this->claims = $claims;
+    }
+
+    public function addPublication(Claim $claim): void
+    {
+        if ($this->claims->contains($claim) === false) {
+            $this->claims->add($claim);
+            $claim->setClient($this);
+        }
+    }
+
+    public function removePublication(Claim $claim): void
+    {
+        if ($this->claims->contains($claim)) {
+            $this->claims->removeElement($claim);
+            $claim->setClient(null);
+        }
     }
 }
