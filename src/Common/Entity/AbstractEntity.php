@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Common\Entity;
@@ -85,5 +86,4 @@ abstract class AbstractEntity implements TimestampableInterface
 
         $this->updatedAt = $dateTime;
     }
-
 }

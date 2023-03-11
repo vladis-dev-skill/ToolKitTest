@@ -1,0 +1,15 @@
+common-controllers:
+  resource:
+    path: ../../src/Common/Controller/
+    namespace: App\Common\Controller
+  type: attribute
+
+admin-controllers:
+  resource:
+    path: ../../src/Admin/Controller/
+    namespace: App\Admin\Controller
+  type: attribute
+
+kernel:
+  resource: App\Kernel
+  type: attribute

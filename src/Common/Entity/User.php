@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Common\Entity;
@@ -120,5 +121,4 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
         $this->password = $password;
         return $this;
     }
-
 }

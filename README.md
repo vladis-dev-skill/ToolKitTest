@@ -6,7 +6,7 @@ You need to use make command for deploy project using docker-compose:
 make init
 ```
 
-Go to bash:
+If need you can go to bash:
 
 ```bash
 make exec_bash

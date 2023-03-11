@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Common\Controller\Registration;
@@ -19,8 +20,8 @@ class RegistrationController extends AbstractController
 {
     public function __construct(
         private readonly LoggerInterface                 $logger,
-        private readonly UserRegistrationFacadeInterface $registrationFacade)
-    {
+        private readonly UserRegistrationFacadeInterface $registrationFacade
+    ) {
     }
 
     #[Route(path: "/register", name: ".register", methods: ["POST"])]
@@ -41,9 +42,7 @@ class RegistrationController extends AbstractController
             return new Response($serializer->serialize($user, 'json', ['groups' => 'user_read']));
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), ['exception' => $e]);
+            return $this->json(['message' => $e->getMessage()]);
         }
-
-        return $this->json(['message' => 'Registration failed!']);
     }
-
 }

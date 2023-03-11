@@ -1,5 +1,4 @@
 parameters:
-
 services:
   _defaults:
     autowire: true      # Automatically injects dependencies in your services.
@@ -16,8 +15,16 @@ services:
       - '../src/DependencyInjection/'
       - '../src/Kernel.php'
 
-  # add more service definitions when explicit configuration is needed
-  # please note that last definitions always *replace* previous ones
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+  Predis\Client:
+    arguments:
+      - '%env(REDIS_URL)%'
+
+  Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+    arguments:
+      - '@Predis\Client'
 
   app.auth_success_handler:
     class: App\Common\Security\AuthSuccessHandler

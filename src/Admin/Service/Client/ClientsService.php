@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Admin\Service\Client;
@@ -10,7 +11,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ClientsService implements ClientsServiceInterface
 {
-
     public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }

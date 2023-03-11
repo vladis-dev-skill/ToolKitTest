@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Admin\Controller\Client;
@@ -20,8 +21,7 @@ class ClientsController extends AbstractController
     public function __construct(
         private readonly LoggerInterface         $logger,
         private readonly ClientsServiceInterface $clientService,
-    )
-    {
+    ) {
     }
 
     #[Route(path: '', name: '')]
@@ -32,9 +32,8 @@ class ClientsController extends AbstractController
             return new Response($serializer->serialize($clients, 'json', ['groups' => 'user_read']));
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), ['exception' => $e]);
+            return $this->json(['message' => $e->getMessage()]);
         }
-
-        return $this->json(['message' => 'Something wrong...']);
     }
 
     /**
@@ -50,5 +49,4 @@ class ClientsController extends AbstractController
         }
         return new Response($serializer->serialize($user, 'json', ['groups' => 'user_read']));
     }
-
 }

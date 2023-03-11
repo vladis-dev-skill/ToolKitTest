@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Common\Security;
@@ -34,8 +35,7 @@ class AuthSuccessHandler implements AuthenticationSuccessHandlerInterface
         JWTTokenManagerInterface $jwtManager,
         EventDispatcherInterface $dispatcher,
         ?array                   $cookieProviders = null
-    )
-    {
+    ) {
         $this->jwtManager = $jwtManager;
         $this->dispatcher = $dispatcher;
         $this->cookieProviders = (array)$cookieProviders;

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Common\Service\Facade\Registration;
@@ -19,8 +20,7 @@ final class UserRegistrationFacade implements UserRegistrationFacadeInterface
     public function __construct(
         private readonly EntityManagerInterface      $entityManager,
         private readonly UserPasswordHasherInterface $passwordHasher,
-    )
-    {
+    ) {
     }
 
 

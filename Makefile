@@ -1,6 +1,6 @@
 down: docker-down
 up: docker-up
-init: docker-down-clear docker-pull docker-build docker-up run
+init: docker-down-clear docker-pull docker-build docker-up run-app
 exec_bash: docker-exec-bash
 test: toolkit-test
 
@@ -27,9 +27,7 @@ docker-exec-bash:
 
 #Run app
 
-run: composer-install toolkit-generate-jwt toolkit-migrate
-
-#toolkit-dump toolkit-fixture
+run-app: composer-install toolkit-generate-jwt toolkit-migrate toolkit-phpcs
 
 composer-install:
 	docker exec -it toolkit_php-fpm composer install
@@ -40,5 +38,14 @@ toolkit-generate-jwt:
 toolkit-migrate:
 	docker exec -it toolkit_php-fpm php bin/console doctrine:migrations:migrate --no-interaction
 
+toolkit-phpcs: toolkit-phpcs-mkdir toolkit-phpcs-composer
+toolkit-phpcs-mkdir:
+	docker exec -it toolkit_php-fpm mkdir -p --parents tools/php-cs-fixer
+toolkit-phpcs-composer:
+	docker exec -it toolkit_php-fpm composer require --no-interaction --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
+
 toolkit-fixture:
 	docker exec -it toolkit_php-fpm php bin/console doctrine:fixtures:load --no-interaction
+
+toolkit-php-cs-fixer:
+	docker exec -it toolkit_php-fpm tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src

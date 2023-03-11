@@ -1,14 +1,3 @@
-common-controllers:
-    resource:
-        path: ../src/Common/Controller/
-        namespace: App\Common\Controller
-    type: attribute
-admin-controllers:
-    resource:
-        path: ../src/Admin/Controller/
-        namespace: App\Admin\Controller
-    type: attribute
-
 jwt_auth:
     path: /api/auth
     methods: [ 'POST' ]
