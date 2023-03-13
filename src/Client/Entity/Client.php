@@ -15,15 +15,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Client extends User
 {
     #[ORM\Column(type: "string", nullable: true)]
-    #[Groups('user_read')]
+    #[Groups(['client:read'])]
     private ?string $phoneNumber = null;
 
     #[ORM\Column(type: "string", nullable: true)]
-    #[Groups('user_read')]
+    #[Groups(['client:read'])]
     private ?string $address = null;
 
     #[ORM\OneToMany(mappedBy: "client", targetEntity: Claim::class, cascade: ["persist", "remove"])]
-    #[Groups('user_read')]
+//    #[Groups(['client:read'])]
     private array|Collection $claims;
 
     public function __construct()

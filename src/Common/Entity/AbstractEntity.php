@@ -23,11 +23,11 @@ abstract class AbstractEntity implements TimestampableInterface
     protected ?string $id = null;
 
     #[ORM\Column(type: "datetime_immutable", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
-    #[Groups('user_read')]
+    #[Groups('user:read')]
     protected ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: "datetime_immutable", nullable: true, options: ["default" => "CURRENT_TIMESTAMP"])]
-    #[Groups('user_read')]
+    #[Groups('user:read')]
     protected ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()

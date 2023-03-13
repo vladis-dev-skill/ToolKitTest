@@ -18,7 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class User extends AbstractEntity implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Column(type: "string", unique: true)]
-    #[Groups('user_read')]
+    #[Groups('user:read')]
     private string $email;
 
     #[ORM\Column(type: "string", nullable: true)]
@@ -26,11 +26,8 @@ class User extends AbstractEntity implements UserInterface, PasswordAuthenticate
 
     private ?string $plainPassword = null;
 
-    /**
-     * @var  string[]
-     */
     #[ORM\Column(type: "json")]
-    #[Groups('user_read')]
+    #[Groups('user:read')]
     private array $roles = [];
 
     public function __toString(): string

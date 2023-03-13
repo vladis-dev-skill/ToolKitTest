@@ -27,7 +27,7 @@ final class ShowAllClientController extends AbstractController
     {
         try {
             $clients = $this->clientService->allClient();
-            return new Response($serializer->serialize($clients, 'json', ['groups' => 'user_read']));
+            return new Response($serializer->serialize($clients, 'json', ['groups' => ['user:read', 'client:read']]));
         } catch (\Exception $e) {
             $this->logger->warning($e->getMessage(), ['exception' => $e]);
             return $this->json(['message' => $e->getMessage()]);

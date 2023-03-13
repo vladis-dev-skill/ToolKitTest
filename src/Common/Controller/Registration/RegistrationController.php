@@ -39,7 +39,7 @@ final class RegistrationController extends AbstractController
 
         try {
             $user = $this->registrationFacade->registerUser($userDTO);
-            return new Response($serializer->serialize($user, 'json', ['groups' => 'user_read']));
+            return new Response($serializer->serialize($user, 'json', ['groups' => 'user:read']));
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage(), ['exception' => $e]);
             return $this->json(['message' => $e->getMessage()]);

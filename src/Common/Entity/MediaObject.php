@@ -14,10 +14,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 class MediaObject extends AbstractEntity
 {
     #[ORM\Column(type: "string", nullable: true)]
-    #[Groups("media_object_read")]
+    #[Groups("media_object:read")]
     private ?string $contentUrl = null;
 
-    #[Assert\NotNull(groups: ["media_object_create"])]
+    #[Assert\NotNull(groups: ["media_object:read"])]
     #[Vich\UploadableField(mapping: "media_object", fileNameProperty: "filePath")]
     private ?File $file = null;
 
