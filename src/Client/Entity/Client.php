@@ -49,6 +49,26 @@ class Client extends User
         return $this->address;
     }
 
+    /**
+     * @param string|null $phoneNumber
+     * @return Client
+     */
+    public function setPhoneNumber(?string $phoneNumber = null): Client
+    {
+        $this->phoneNumber = $phoneNumber;
+        return $this;
+    }
+
+    /**
+     * @param string|null $address
+     * @return Client
+     */
+    public function setAddress(?string $address = null): Client
+    {
+        $this->address = $address;
+        return $this;
+    }
+
     public function getClaims(): Collection|array
     {
         return $this->claims;
@@ -59,7 +79,7 @@ class Client extends User
         $this->claims = $claims;
     }
 
-    public function addPublication(Claim $claim): void
+    public function addClaim(Claim $claim): void
     {
         if ($this->claims->contains($claim) === false) {
             $this->claims->add($claim);
@@ -67,7 +87,7 @@ class Client extends User
         }
     }
 
-    public function removePublication(Claim $claim): void
+    public function removeClaim(Claim $claim): void
     {
         if ($this->claims->contains($claim)) {
             $this->claims->removeElement($claim);
