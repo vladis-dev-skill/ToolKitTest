@@ -1,3 +1,4 @@
+Условие - https://docs.google.com/document/d/1bA0SoNvHnyA4-r__wOSh5tcFchjjHmVUfPnP_Rh8Y_A/edit
 ## Installation
 
 You need to use make command for deploy project using docker-compose:
